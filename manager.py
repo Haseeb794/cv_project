@@ -120,3 +120,14 @@ class CaptureManager(object):
                     )
 
                     self._videoWriter.write(self._frame)
+
+class WindowManager(object):
+    def __init__(self, windowName, keypressCallback = None) -> None:
+        self.keypressCallback = keypressCallback
+        self.windowName = windowName
+        
+        self._isWindowCreated = False
+    
+    @property
+    def isWindowCreated(self):
+        return self._isWindowCreated
