@@ -68,3 +68,19 @@ class CaptureManager(object):
             time_elapsed = time.time()
             self._fpsEstimate = self._framesElapsed / time_elapsed
         self._framesElapsed += 1
+        
+        if self.previewWindowManager is not None:
+            if self.shouldMirrorPreview:
+                mirroredFrame = np.fliplr(self._frame).copy()
+                self.previewWindowManager.show(mirroredFrame)
+            else:
+                self.previewWindowManager.show(self._frame)
+        
+        if self.isWritingImage:
+            cv2.imwrite(self._imageFilename, self._frame)
+            self._imageFilename = None
+        
+        self._writeVideoFrame()
+ 
+        self._frame = None
+        self._enteredFrame = False
