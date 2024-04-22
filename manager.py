@@ -121,29 +121,30 @@ class CaptureManager(object):
 
                     self._videoWriter.write(self._frame)
 
+
 class WindowManager(object):
-    def __init__(self, windowName, keypressCallback = None) -> None:
+    def __init__(self, windowName, keypressCallback=None) -> None:
         self.keypressCallback = keypressCallback
         self.windowName = windowName
-        
+
         self._isWindowCreated = False
-    
+
     @property
     def isWindowCreated(self):
         return self._isWindowCreated
-    
+
     def createWindow(self):
         cv2.namedWindow(self.windowName)
         self._isWindowCreated = True
-    
-    def show(self,frame):
-        cv2.imshow(self.windowName,frame)
-    
+
+    def show(self, frame):
+        cv2.imshow(self.windowName, frame)
+
     def destroyWindow(self):
         cv2.destroyWindow(self.windowName)
         self._isWindowCreated = False
-    
-    def processEvents (self):
+
+    def processEvents(self):
         keycode = cv2.waitKey(1)
         if self.keypressCallback is not None and keycode != -1:
             # Discard any non-ASCII info encoded by GTK.
