@@ -1,5 +1,6 @@
 import cv2
 from manager import WindowManager, CaptureManager
+import filters
 
 
 class Cameo(object):
@@ -8,6 +9,7 @@ class Cameo(object):
         self._captureManager = CaptureManager(
             cv2.VideoCapture(0), self._windowManager, True
         )
+        self._curveFilter = filters.FindEdgesFilter()
 
     def run(self):
         """Run the main loop."""
@@ -15,7 +17,11 @@ class Cameo(object):
         while self._windowManager.isWindowCreated:
             self._captureManager.enterFrame()
             frame = self._captureManager.frame
-            # TODO: Filter the frame (Chapter 3).
+            # TODO: Track the Faces .
+
+            filters.strokeEdges(frame, frame)
+            self._curveFilter.apply(frame, frame)
+
             self._captureManager.exitFrame()
             self._windowManager.processEvents()
 
