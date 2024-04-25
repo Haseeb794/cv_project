@@ -88,7 +88,7 @@ class CaptureManager(object):
     def writeImage(self, filename):
         self._imageFilename = filename
 
-    def startWritingVideo(self, filename, encoding=cv2.VideoWriter_fourcc(*"I420")):
+    def startWritingVideo(self, filename, encoding=cv2.VideoWriter_fourcc(*"MJPG")):
         self._videoFilename = filename
         self._videoEncoding = encoding
 
@@ -121,7 +121,7 @@ class CaptureManager(object):
                         int(self._capture.get(cv2.CAP_PROP_FRAME_HEIGHT)),
                     )
                     self._videoWriter = cv2.VideoWriter(
-                        self._videoFilename, self._videoEncoding, fps, size
+                        self._videoFilename, self._videoEncoding, 29.0, size
                     )
 
                     self._videoWriter.write(self._frame)
