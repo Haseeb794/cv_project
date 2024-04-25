@@ -94,6 +94,7 @@ class CaptureManager(object):
 
     def stopWritingVideo(self):
         """Stop writing exited frames to a video file."""
+
         self._videoFilename = None
         self._videoEncoding = None
         self._videoWriter = None
@@ -102,14 +103,18 @@ class CaptureManager(object):
         if not self.isWritingVideo:
             return
         if self._videoWriter is None:
+            print("here in _writeVideoFrame")
             fps = self._capture.get(cv2.CAP_PROP_FPS)
-            if fps == 0.0:
+            print(f"FPS {fps}")
+            if fps != 0.0:
+                print(f"FPS cond {fps}")
                 # The capture's FPS is unknown so use an estimate.
                 if self._framesElapsed < 20:
                     # Wait until more frames elapse so that the
                     # estimate is more stable.
                     return
                 else:
+                    print(f"Hello")
                     fps = self._fpsEstimate
                     size = (
                         int(self._capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
