@@ -103,28 +103,24 @@ class CaptureManager(object):
         if not self.isWritingVideo:
             return
         if self._videoWriter is None:
-            print("here in _writeVideoFrame")
             fps = self._capture.get(cv2.CAP_PROP_FPS)
-            print(f"FPS {fps}")
-            if fps != 0.0:
-                print(f"FPS cond {fps}")
+            if fps <= 0.0:
                 # The capture's FPS is unknown so use an estimate.
-                if self._framesElapsed < 20:
+                if self._framesElapsed < 100:
                     # Wait until more frames elapse so that the
                     # estimate is more stable.
                     return
                 else:
-                    print(f"Hello")
                     fps = self._fpsEstimate
-                    size = (
-                        int(self._capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
-                        int(self._capture.get(cv2.CAP_PROP_FRAME_HEIGHT)),
-                    )
-                    self._videoWriter = cv2.VideoWriter(
-                        self._videoFilename, self._videoEncoding, 29.0, size
-                    )
+            size = (
+                int(self._capture.get(cv2.CAP_PROP_FRAME_WIDTH)),
+                int(self._capture.get(cv2.CAP_PROP_FRAME_HEIGHT)),
+            )
+            self._videoWriter = cv2.VideoWriter(
+                self._videoFilename, self._videoEncoding, fps, size
+            )
 
-                    self._videoWriter.write(self._frame)
+        self._videoWriter.write(self._frame)
 
 
 class WindowManager(object):

@@ -9,7 +9,7 @@ class Cameo(object):
         self._captureManager = CaptureManager(
             cv2.VideoCapture(0), self._windowManager, True
         )
-        self._curveFilter = filters.FindEdgesFilter()
+        self._curveFilter = filters.BGRVelviaCurveFilter()
 
     def run(self):
         """Run the main loop."""
