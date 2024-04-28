@@ -9,7 +9,7 @@ class Cameo(object):
         self._captureManager = CaptureManager(
             cv2.VideoCapture(0), self._windowManager, True
         )
-        self._curveFilter = filters.BGRVelviaCurveFilter()
+        self._curveFilter = filters.BGRCrossProcessCurveFilter()
 
     def run(self):
         """Run the main loop."""
@@ -19,7 +19,7 @@ class Cameo(object):
             frame = self._captureManager.frame
             # TODO: Track the Faces .
 
-            filters.strokeEdges(frame, frame)
+            filters.recolorCMV(frame, frame)
             self._curveFilter.apply(frame, frame)
 
             self._captureManager.exitFrame()
